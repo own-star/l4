@@ -12,11 +12,13 @@ put(Name,Status,Time) ->
 	ets:insert(persons,{Name,Status,CTime+Time}).
 
 get(Name) ->
-	[{_,Status,Exp}] = ets:lookup(persons,Name),
 	CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
-	case CTime of 
-		CTime when CTime > Exp -> 
+	case ets:lookup(persons,Name) of 
+		[] -> 
+			"No tuple found";
+		[{_,_,Exp}] when CTime > Exp -> 
 			ets:delete(persons,Name),
 			"No tuple found";
-		CTime -> Status
+		[{_,Status,_}] -> 
+			Status
 	end.
