@@ -11,7 +11,6 @@ put(Name,Status,Time) ->
 	CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
 	ets:insert(persons,{Name,Status,CTime+Time}).
 
-%% 
 get(Name) ->
 	[{_,Status,Exp}] = ets:lookup(persons,Name),
 	CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
