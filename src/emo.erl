@@ -14,9 +14,9 @@ put(Name,Status,Time) ->
 get(Name) ->
 	[{_,Status,Exp}] = ets:lookup(persons,Name),
 	CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
-	if 
-		CTime > Exp -> Res = "No tuple found",
-					   ets:delete(persons,Name);
-		true -> Res = Status
-	end,
-	Res.
+	case CTime of 
+		CTime when CTime > Exp -> 
+			ets:delete(persons,Name),
+			"No tuple found";
+		CTime -> Status
+	end.
