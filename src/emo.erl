@@ -58,6 +58,10 @@ start_test() -> [
 				 ?_assert(start({derop_interval,10}) =:= persons)
 				].
 
+custodian_test() -> [
+				 ?_assert(custodian() =:= clear_table_done)
+				].
+
 put_emo_test() -> [
 				 ?_assert(put_emo({"Homer",":-)"},20) =:= true),
 				 ?_assert(put_emo({"Moe",":-|"},20) =:= true)
