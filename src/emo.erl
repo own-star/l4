@@ -25,3 +25,26 @@ get_emo(Name) ->
 		[{_,Status,_}] -> 
 			binary_to_list(Status)
 	end.
+
+-ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+
+start_test() -> [
+				 ?_assert(start() =:= persons)
+				].
+
+put_emo_test() -> [
+				 ?_assert(put_emo({"Homer",":-)"},20) =:= true),
+				 ?_assert(put_emo({"Moe",":-|"},20) =:= true)
+				].
+
+get_emo_test() -> [
+				 ?_assert(get_emo("Homer") =:= ":-)"),
+				 ?_assert(get_emo("Moe") =:= ":-|")
+				].
+
+stop_test() -> [
+				 ?_assert(stop() =:= true)
+				].
+
+-endif.
