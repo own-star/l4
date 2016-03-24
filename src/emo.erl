@@ -46,7 +46,6 @@ get_by_date(Name, FromSec, ToSec, Acc) ->
 			get_by_date(ets:next(persons,Name),FromSec,ToSec,Acc)
 	end.
 
-
 custodian() ->
 	CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
 	io:format("Current time in seconds: ~p~n",[CTime]),
@@ -65,6 +64,7 @@ custodian(Name,CTime) ->
 				
 		end,
 	custodian(NextName,CTime).
+
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
