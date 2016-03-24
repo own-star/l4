@@ -25,7 +25,6 @@ get_emo(Name) ->
 		[] -> 
 			no_tuple_found;
 		[{_,_,Exp}] when CTime > Exp -> 
-%%			ets:delete(persons,BName),
 			no_tuple_found;
 		[{_,Status,_}] -> 
 			binary_to_list(Status)
@@ -57,7 +56,7 @@ custodian('$end_of_table',_) ->
 	clear_table_done;
 custodian(Name,CTime) ->
 	io:format("Current time in seconds: ~p Name: ~p~n",[CTime,Name]),
-	NName = ets:next(persons, Name),
+	NextName = ets:next(persons, Name),
 	[{_,_,Exp}] = ets:lookup(persons,Name),
 		if
 		   	CTime > Exp ->
@@ -65,7 +64,7 @@ custodian(Name,CTime) ->
 			true -> true
 				
 		end,
-	custodian(NName,CTime).
+	custodian(NextName,CTime).
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
@@ -88,8 +87,6 @@ get_emo_test() -> [
 				 ?_assert(get_emo("Moe") =:= ":-|")
 				].
 get_by_date_test() -> [
-%				 CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
-%				 DateTo = calendar:gregorian_seconds_to_datetime(CTime + 30),
 				 ?_assert(get_by_date({date(), time()}, calendar:gregorian_seconds_to_datetime(calendar:datetime_to_gregorian_seconds({date(), time()}) + 30)) =:= {ok, [{"Homer",":-)"},{"Moe",":-|"}]})
 				].
 stop_test() -> [
