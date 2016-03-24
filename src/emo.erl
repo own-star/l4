@@ -57,12 +57,11 @@ custodian(Name,CTime) ->
 	io:format("Current time in seconds: ~p Name: ~p~n",[CTime,Name]),
 	NextName = ets:next(persons, Name),
 	[{_,_,Exp}] = ets:lookup(persons,Name),
-		if
-		   	CTime > Exp ->
-				ets:delete(persons,Name);
-			true -> true
-				
-		end,
+	if
+	   	CTime > Exp ->
+			ets:delete(persons,Name);
+		true -> true
+	end,
 	custodian(NextName,CTime).
 
 
