@@ -87,11 +87,11 @@ get_emo_test() -> [
 				 ?_assert(get_emo("Homer") =:= ":-)"),
 				 ?_assert(get_emo("Moe") =:= ":-|")
 				].
-%get_by_date_test() -> [
+get_by_date_test() -> [
 %				 CTime = calendar:datetime_to_gregorian_seconds({date(), time()}),
 %				 DateTo = calendar:gregorian_seconds_to_datetime(CTime + 30),
-%				 ?_assert(get_by_date({date(), time()}, DateTo) =:= {ok, [{"Homer",":-)"},{"Moe",":-|"}]})
-%				].
+				 ?_assert(get_by_date({date(), time()}, calendar:gregorian_seconds_to_datetime(calendar:datetime_to_gregorian_seconds({date(), time()}) + 30)) =:= {ok, [{"Homer",":-)"},{"Moe",":-|"}]})
+				].
 stop_test() -> [
 				 ?_assert(stop() =:= true)
 				].
