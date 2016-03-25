@@ -1,17 +1,23 @@
 -module(emo).
 -export([start/1,stop/0,put_emo/2,get_emo/1,get_by_date/2,custodian/0]).
 
-%% Emo server v1.4
+%% Emo server v1.5
 
 start([{drop_interval,DrTime}]) ->
 	ok = timer:start(),
-	{ok, _} = timer:apply_interval(DrTime*1000, emo, custodian, []),
-	persons = ets:new(persons,[set,public,named_table]);
+	{ok, TRef} = timer:apply_interval(DrTime*1000, emo, custodian, []),
+	persons = ets:new(persons,[set,public,named_table]),
+	timer = ets:new(timer,[set,public,named_table]),
+	ets:insert(timer,{timer,TRef}),
+	ok;
 start(_) ->
 	io:format("Wrong arguments.~nUse ~p:start([{drop_interval,Sec}])~n", [?MODULE]).
 
 stop() -> 
 	custodian(),
+	[{timer,TRef}] = ets:lookup(timer,timer),
+	{ok, cancel} = timer:cancel(TRef),
+	ets:delete(timer),
 	ets:delete(persons).
 
 put_emo({Name,Status},Time) ->
@@ -69,7 +75,7 @@ custodian(Name,CTime) ->
 -include_lib("eunit/include/eunit.hrl").
 
 start_test() -> [
-	?_assert(start({derop_interval,10}) =:= persons)].
+	?_assert(start({derop_interval,10}) =:= ok)].
 
 custodian_test() -> [
 	?_assert(custodian() =:= clear_table_done)].
