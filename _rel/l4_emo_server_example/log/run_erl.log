@@ -1,8 +1,0 @@
-run_erl [9636] Sat Apr  2 16:06:45 2016
-Args before exec of shell:
-run_erl [9636] Sat Apr  2 16:06:45 2016
-argv[0] = sh
-run_erl [9636] Sat Apr  2 16:06:45 2016
-argv[1] = -c
-run_erl [9636] Sat Apr  2 16:06:45 2016
-argv[2] = exec "/home/erlang/taras/l4/_rel/l4_emo_server_example/bin/l4_emo_server_example" "console"
