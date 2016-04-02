@@ -1,4 +1,4 @@
--module(emo_server).
+-module(l4_emo_server).
 -export([start/1, stop/0, get_emo/1, put_emo/2, get_by_date/2, custodian/0]).
 
 -behaviour(gen_server).
